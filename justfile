@@ -16,3 +16,9 @@ ui:
 dev:
   just serve && just ui
 
+test *args:
+  poetry run pytest src/tests {{args}}
+
+build-container:
+  docker build -t python-numpy-pandas .
+

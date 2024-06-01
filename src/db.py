@@ -1,63 +1,66 @@
-import psycopg2
-from psycopg2 import Error
+import sqlite3
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import SQLAlchemyError
 
 
-class SingletonMeta(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            instance = super().__call__(*args, **kwargs)
-            cls._instances[cls] = instance
-        return cls._instances[cls]
+class DatabaseError(Exception):
+    """Custom exception class for database errors"""
+    pass
 
 
-class Database(metaclass=SingletonMeta):
-    def __init__(self, db_name, user, password, host, port):
+class Database():
+    def __init__(self, db_path):
         self.connection = None
         try:
-            self.connection = psycopg2.connect(
-                dbname=db_name, user=user, password=password, host=host, port=port
-            )
-            self.cursor = self.connection.cursor()
-            print(f"Connected to {db_name} database.")
-        except Error as e:
-            print(f"Error connecting to database: {e}")
+            self.engine = create_engine(f'sqlite:///{db_path}')
+            self.connection = self.engine.connect()
+            print(f"Connected to database at {db_path}.")
+            self.initialize_tables()
+        except SQLAlchemyError as e:
+            raise DatabaseError(f"Error connecting to database: {e}")
 
     def execute_query(self, query, params=None):
         if not self.connection:
-            print("Cannot execute query, database connection does not exist")
-            return
+            raise DatabaseError("Cannot execute query, database connection does not exist")
 
         try:
             if params:
-                self.cursor.execute(query, params)
+                self.connection.execute(text(query), params)
             else:
-                self.cursor.execute(query)
+                self.connection.execute(text(query))
             self.connection.commit()
-        except Error as e:
-            print(f"Error executing query: {e}")
+        except SQLAlchemyError as e:
+            raise DatabaseError(f"Error executing query: {e}")
 
     def execute_read_query(self, query, params=None):
         if not self.connection:
-            print("Cannot execute query, database connection does not exist")
-            return
+            raise DatabaseError("Cannot execute query, database connection does not exist")
 
-        result = None
         try:
             if params:
-                self.cursor.execute(query, params)
+                result = self.connection.execute(text(query), params).fetchall()
             else:
-                self.cursor.execute(query)
-            result = self.cursor.fetchall()
+                result = self.connection.execute(text(query)).fetchall()
             return result
-        except Error as e:
-            print(f"Error reading query: {e}")
-        return result
+        except SQLAlchemyError as e:
+            raise DatabaseError(f"Error reading query: {e}")
 
-    def __del__(self):
+    def initialize_tables(self):
+        query = """
+        CREATE TABLE IF NOT EXISTS submissions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            code TEXT NOT NULL,
+            timestamp TEXT NOT NULL
+        );
+        """
+        self.execute_query(query)
+
+    def add_submission(self, code: str, timestamp: str):
+        insert_query = "INSERT INTO submissions (code, timestamp) VALUES (:code, :timestamp);"
+        self.execute_query(insert_query, {'code':code, 'timestamp':timestamp})
+
+    def close(self):
         if self.connection:
-            self.cursor.close()
             self.connection.close()
             print("Database connection closed.")
 
