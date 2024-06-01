@@ -9,8 +9,11 @@ readme = "README.md"
 python = "^3.12"
 numpy = "^1.26.4"
 pandas = "^2.2.2"
+fastapi = "^0.111.0"
 
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
 
 [build-system]
 requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"

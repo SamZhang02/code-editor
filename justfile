@@ -4,16 +4,15 @@ default:
   just --list
 
 fmt: 
+  poetry run black src
   pnpm run format
 
 serve:
-  poetry run src/server.py
+  poetry run fastapi dev src/server.py
 
 ui:
   npm run dev
 
 dev:
-  serve && npm run dev
-
-
+  just serve && just ui
 

@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import Error
 
+
 class SingletonMeta(type):
     _instances = {}
 
@@ -10,16 +11,13 @@ class SingletonMeta(type):
             cls._instances[cls] = instance
         return cls._instances[cls]
 
+
 class Database(metaclass=SingletonMeta):
     def __init__(self, db_name, user, password, host, port):
         self.connection = None
         try:
             self.connection = psycopg2.connect(
-                dbname=db_name,
-                user=user,
-                password=password,
-                host=host,
-                port=port
+                dbname=db_name, user=user, password=password, host=host, port=port
             )
             self.cursor = self.connection.cursor()
             print(f"Connected to {db_name} database.")
@@ -29,7 +27,7 @@ class Database(metaclass=SingletonMeta):
     def execute_query(self, query, params=None):
         if not self.connection:
             print("Cannot execute query, database connection does not exist")
-            return 
+            return
 
         try:
             if params:
@@ -43,7 +41,7 @@ class Database(metaclass=SingletonMeta):
     def execute_read_query(self, query, params=None):
         if not self.connection:
             print("Cannot execute query, database connection does not exist")
-            return 
+            return
 
         result = None
         try:
@@ -62,6 +60,7 @@ class Database(metaclass=SingletonMeta):
             self.cursor.close()
             self.connection.close()
             print("Database connection closed.")
+
 
 if __name__ == "__main__":
     ...
