@@ -1,14 +1,28 @@
-from typing import Union
+from typing import Literal
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
+@app.get("/health")
+def health_check():
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+class Result(BaseModel):
+    status: Literal["success"] | Literal["error"]
+    stdout: str
+    stderr: str
+    time_ran: str
+    timestamp: str
+
+
+@app.post("/code/test")
+def test_code(code: str) -> Result:
+    return Result(status="success", stdout="", stderr="", time_ran="0", timestamp="")
+
+
+@app.post("/code/submit")
+def submit_code(user_id: str, code: str) -> Result:
+    return Result(status="success", stdout="", stderr="", time_ran="0", timestamp="")
