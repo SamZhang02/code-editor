@@ -51,9 +51,9 @@ export const CodeOutput = ({ type, result }: CodeOutputProps) => {
             </div>
           )}
 
-          <div>
-            <p className='text-zinc-500'>
-              Code ran in {result.timeRan?.toPrecision(4)}ms at {result.timestamp}
+          <div className='text-zinc-500'>
+            <p>
+              Code ran {result.timeRan && <>in {result.timeRan?.toPrecision(4)}ms </>}at {result.timestamp}
             </p>
           </div>
         </div>
