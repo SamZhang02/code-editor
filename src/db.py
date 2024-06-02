@@ -1,8 +1,8 @@
-import sqlite3
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 import logging
 
+logger = logging.getLogger()
 
 class DatabaseError(Exception):...
 
@@ -13,7 +13,7 @@ class Database:
         try:
             self.engine = create_engine(f"sqlite:///{db_path}")
             self.connection = self.engine.connect()
-            print(f"Connected to database at {db_path}.")
+            logger.info(f"Connected to database at {db_path}.")
             self.initialize_tables()
         except SQLAlchemyError as e:
             raise DatabaseError(f"Error connecting to database: {e}")
@@ -67,7 +67,7 @@ class Database:
     def close(self):
         if self.connection:
             self.connection.close()
-            print("Database connection closed.")
+            logger.info("Database connection closed.")
 
 
 if __name__ == "__main__":
