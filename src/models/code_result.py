@@ -6,6 +6,6 @@ class CodeResult(BaseModel):
     status: Literal["success"] | Literal["error"]
     stdout: Optional[str]
     stderr: Optional[str]
-    time_ran: Optional[float]
+    timeRan: Optional[float]
     timestamp: str
     message: Optional[str]

@@ -67,6 +67,6 @@ def run_code_in_docker(code: str) -> CodeResult:
         timestamp=timestamp,
         stdout=output,
         stderr=error,
-        time_ran=execution_time,
+        timeRan=execution_time,
         message=message,
     )

@@ -20,7 +20,7 @@ package management is done using npm. Find an overview of the codebase in
 `/docs`.
 
 You should first build a Docker container with the image containing Python 3.11,
-numpy and pandas with one of the following commands
+numpy, pandas and scipy with one of the following commands
 
 ```shell
 just build-container

@@ -31,45 +31,45 @@ const App = () => {
     }
   };
 
-  return (
-    <div className='flex h-screen min-h-screen w-screen flex-col items-center bg-zinc-900 p-32 text-zinc-100'>
-      <div className='flex h-full w-[70rem] flex-col gap-8'>
-        <div className='flex justify-between'>
-          <h1 className='text-4xl text-zinc-100'>Python 3 Online</h1>
-          <div className='flex gap-6'>
-            <Button variant='contained' onClick={handleTestCode}>
-              Test code
-            </Button>
+return (
+  <div className='flex w-screen flex-col items-center bg-zinc-900 p-32 text-zinc-100 h-screen'>
+    <div className='flex h-full w-[70rem] flex-col gap-8'>
+      <div className='flex justify-between'>
+        <h1 className='text-4xl text-zinc-100'>Python 3 Online</h1>
+        <div className='flex gap-6'>
+          <Button variant='contained' onClick={handleTestCode}>
+            Test code
+          </Button>
 
-            <Button variant='contained' onClick={handleSubmitCode}>
-              Submit
-            </Button>
-          </div>
+          <Button variant='contained' onClick={handleSubmitCode}>
+            Submit
+          </Button>
+        </div>
+      </div>
+
+      <div className='flex flex-1 rounded-2xl border border-zinc-400 p-1 max-h-[95%]'>
+        <div className='w-3/5'>
+          <Editor
+            defaultLanguage='python'
+            height={'100%'}
+            theme='vs-dark'
+            loading={<CircularProgress />}
+            value={code}
+            onChange={(str) => setCode(str || '')}
+          />
         </div>
 
-        <div className='flex flex-1 rounded-2xl border border-zinc-400 p-1'>
-          <div className='w-3/5'>
-            <Editor
-              defaultLanguage='python'
-              height={'100%'}
-              theme='vs-dark'
-              loading={<CircularProgress />}
-              value={code}
-              onChange={(str) => setCode(str || '')}
-            />
-          </div>
-
-          <div className='w-2/5 p-4 flex'>
+        <div className='w-2/5 p-4 flex h-full max-h-full overflow-auto' style={{scrollbarWidth:'thin'}}>
             {waitingForOutput ? (
               <CircularProgress className='mx-auto my-auto'/>
             ) : (
               result && <CodeOutput result={result} type={outputType} />
             )}
-          </div>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default App;
