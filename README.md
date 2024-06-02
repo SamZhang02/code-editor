@@ -16,11 +16,14 @@ thats runs the code, and a `submit` button to persist the code into a database.
 - just (optional)
 
 You should first build a Docker container with the image containing Python 3.11,
-numpy, pandas and scipy with one of the following commands The backend Python's
-package management is done using `Poetry`, and the frontend's package management
-is done using `npm`. Find an
+numpy, pandas and scipy with one of the following commands.
+
+The backend Python's package management is done using `Poetry`, and the frontend's package management
+is done using `npm`. 
+
+You can find an
 [overview](https://github.com/SamZhang02/code-editor/blob/main/docs/OVERVIEW.md)
-of the codebase in `/docs`.
+of the codebase's key elements in `/docs`.
 
 ```shell
 just build-container
