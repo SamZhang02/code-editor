@@ -4,10 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 import logging
 
 
-class DatabaseError(Exception):
-    """Custom exception class for database errors"""
-
-    pass
+class DatabaseError(Exception):...
 
 
 class Database:

@@ -42,7 +42,7 @@ export const CodeOutput = ({ type, result }: CodeOutputProps) => {
 
           <div>
             <p className='text-zinc-500'>
-              Code ran in {result.time_ran}ms at {result.timestamp}
+              Code ran in {result.timeRan}ms at {result.timestamp}
             </p>
           </div>
         </div>
