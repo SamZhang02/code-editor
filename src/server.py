@@ -48,4 +48,5 @@ def submit_code(request: CodeRequest) -> CodeResult:
 
     return result
 
+
 app.include_router(api_router)

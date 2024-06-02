@@ -5,7 +5,7 @@ default:
 
 fmt: 
   poetry run black src
-  pnpm run format
+  npm run format
 
 serve:
   poetry run fastapi dev src/server.py
