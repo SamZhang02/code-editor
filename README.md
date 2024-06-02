@@ -35,6 +35,8 @@ docker build -t python-numpy-pandas .
 
 This is the container image for where user submitted codes will be ran.
 
+You should also provide environment variables as per any instances of `.env.example`. In this project, you need to provide an environment variable indicating the server's url in the `/client` codes. 
+
 ## Running the project
 
 I use `just` as a script runner, with available scripts located in the
