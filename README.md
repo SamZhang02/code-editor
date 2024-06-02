@@ -13,7 +13,7 @@ The website is an online code editor for Python 3.11, with a `test code` button 
 - Docker
 - just (optional) 
 
-The backend Python's package management is done using Poetry, and the frontend's package management is done using npm. Find an overview of the codebase in `/docs`.
+The backend Python's package management is done using `Poetry`, and the frontend's package management is done using `npm`. Find an [overview](https://github.com/SamZhang02/code-editor/blob/main/docs/OVERVIEW.md) of the codebase in `/docs`.
 
 You should first build a Docker container with the image containing Python 3.11, numpy and pandas with one of the following commands
 ```shell
