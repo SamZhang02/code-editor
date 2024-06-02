@@ -9,7 +9,7 @@ type CodeOutputProps = {
 
 export const CodeOutput = ({ type, result }: CodeOutputProps) => {
   return (
-    <div className='flex w-full flex-col gap-4 h-full '>
+    <div className='flex h-full w-full flex-col gap-4 '>
       {result.status === 'success' ? (
         <Alert variant='outlined' severity='success' className='mt-2'>
           <p className='text-green-200'>
