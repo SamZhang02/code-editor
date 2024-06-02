@@ -26,3 +26,10 @@ dist-ssr
 # python
 __pycache__
 .venv
+
+# env variables
+*/.env
+
+# sqlite db file
+code_editor.db
+

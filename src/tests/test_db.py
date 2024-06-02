@@ -3,6 +3,7 @@ import os
 
 from src.db import Database
 
+
 def test_data_persists():
     db = Database("test.db")
 
@@ -12,11 +13,12 @@ def test_data_persists():
 
     results = db.execute_read_query("SELECT * FROM submissions")
 
-    assert results[0] == (1, "print('hello world!')", 'today')
-    assert results[1] == (2, "print('bye bye world!')", 'tomorrow')
+    assert results[0] == (1, "print('hello world!')", "today")
+    assert results[1] == (2, "print('bye bye world!')", "tomorrow")
 
     del db
-    os.remove('test.db')
+    os.remove("test.db")
+
 
 def test_sql_injection_1():
     db = Database("test.db")
@@ -27,14 +29,15 @@ def test_sql_injection_1():
 
     results = db.execute_read_query("SELECT * FROM submissions")
     assert len(results) == 1
-    assert results[0] == (1, injection_code, 'today')
+    assert results[0] == (1, injection_code, "today")
 
     db.add_submission("print('bye bye world!')", "tomorrow")
     results = db.execute_read_query("SELECT * FROM submissions")
     assert len(results) == 2
 
     del db
-    os.remove('test.db')
+    os.remove("test.db")
+
 
 def test_sql_injection_2():
     db = Database("test.db")
@@ -45,11 +48,11 @@ def test_sql_injection_2():
 
     results = db.execute_read_query("SELECT * FROM submissions")
     assert len(results) == 1
-    assert results[0] == (1, injection_code, 'today')
+    assert results[0] == (1, injection_code, "today")
 
     db.add_submission("print('bye bye world!')", "tomorrow")
     results = db.execute_read_query("SELECT * FROM submissions")
     assert len(results) == 2
 
     del db
-    os.remove('test.db')
+    os.remove("test.db")
