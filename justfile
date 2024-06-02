@@ -13,9 +13,6 @@ serve:
 ui:
   npm run dev
 
-dev:
-  just serve && just ui
-
 test *args:
   poetry run pytest src/tests {{args}}
 
