@@ -20,7 +20,11 @@ export const CodeOutput = ({ type, result }: CodeOutputProps) => {
         </Alert>
       ) : (
         <Alert variant='outlined' severity='error'>
-          <p className='text-red-300'>Your code returned an error</p>
+          <p className='text-red-300'>
+            {type === 'test'
+              ? 'Your code returned an error'
+              : 'Your code returned an error and was not written into the database'}
+          </p>
         </Alert>
       )}
 
@@ -37,6 +41,13 @@ export const CodeOutput = ({ type, result }: CodeOutputProps) => {
             <div>
               <p className='font-semibold'>stderr:</p>
               <p>{result.stderr}</p>
+            </div>
+          )}
+
+          {result.message && (
+            <div>
+              <p className='font-semibold'>message:</p>
+              <p>{result.message}</p>
             </div>
           )}
 

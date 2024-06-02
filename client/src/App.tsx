@@ -9,17 +9,26 @@ import { CodeResult } from './models/CodeResult';
 const App = () => {
   const [code, setCode] = useState<string>('print("hello world!")');
   const [outputType, setOutputType] = useState<'test' | 'submit'>('test');
+  const [waitingForOutput, setWaitingForOutPut] = useState<boolean>(false);
   const [result, setResult] = useState<CodeResult | null>(null);
 
   const handleTestCode = async () => {
-    const result = await testCode(code);
-    setResult(result);
-    setOutputType('test');
+    if (!waitingForOutput) {
+      setWaitingForOutPut(true);
+      const result = await testCode(code);
+      setWaitingForOutPut(false);
+      setResult(result);
+      setOutputType('test');
+    }
   };
   const handleSubmitCode = async () => {
-    const result = await submitCode(code);
-    setResult(result);
-    setOutputType('submit');
+    if (!waitingForOutput) {
+      setWaitingForOutPut(true);
+      const result = await submitCode(code);
+      setWaitingForOutPut(false);
+      setResult(result);
+      setOutputType('submit');
+    }
   };
 
   return (
@@ -50,8 +59,12 @@ const App = () => {
             />
           </div>
 
-          <div className='w-2/5 p-4'>
-            {result && <CodeOutput result={result} type={outputType} />}
+          <div className='w-2/5 p-4 flex'>
+            {waitingForOutput ? (
+              <CircularProgress className='mx-auto my-auto'/>
+            ) : (
+              result && <CodeOutput result={result} type={outputType} />
+            )}
           </div>
         </div>
       </div>

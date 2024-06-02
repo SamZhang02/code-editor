@@ -8,14 +8,18 @@ from src.models import CodeResult
 from src.runner import run_code_in_docker
 from src.db import Database, DatabaseError
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger()
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"], # For the take home assignment, I simply allowed all origins for CORS. In a production environment, this would be the frontend's url instead.
+    allow_origins=[
+        "*"
+    ],  # For the take home assignment, I simply allowed all origins for CORS. In a production environment, this would be the frontend's url instead.
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -59,7 +63,6 @@ def submit_code(request: CodeRequest) -> CodeResult:
             logger.info(f"Wring to db failed, error: {e}")
             result.status = "error"
             result.stderr = str(e)
-
 
     return result
 

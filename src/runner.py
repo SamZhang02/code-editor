@@ -15,14 +15,23 @@ def run_code_in_docker(code: str) -> CodeResult:
     with open(code_filepath, "w") as f:
         f.write(code)
 
+    container_name = f"code_runner_{uuid.uuid4().hex}"
+
     start_time = time.time()
     timestamp = datetime.now().isoformat()
+
+    status = "success"
+    output = None
+    message = None
+    error = None
 
     try:
         result = subprocess.run(
             [
                 "docker",
                 "run",
+                "--name",
+                container_name,
                 "--rm",
                 "-v",
                 f"/tmp:/app:ro",
@@ -47,15 +56,17 @@ def run_code_in_docker(code: str) -> CodeResult:
     except subprocess.TimeoutExpired:
         status = "error"
         output = None
-        error = "Timeout: Code ran for longer than 10 seconds."
+        message = "Timeout: Code ran for longer than 10 seconds."
         execution_time = None
     finally:
         os.remove(code_filepath)
+        subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
 
     return CodeResult(
         status=status,
         timestamp=timestamp,
         stdout=output,
         stderr=error,
-        time_ran=float(format(execution_time, ".4f")),
+        time_ran=execution_time,
+        message=message,
     )

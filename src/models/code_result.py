@@ -8,3 +8,4 @@ class CodeResult(BaseModel):
     stderr: Optional[str]
     time_ran: Optional[float]
     timestamp: str
+    message: Optional[str]

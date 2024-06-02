@@ -4,7 +4,8 @@ import logging
 
 logger = logging.getLogger()
 
-class DatabaseError(Exception):...
+
+class DatabaseError(Exception): ...
 
 
 class Database:
