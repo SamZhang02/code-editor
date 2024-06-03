@@ -1,10 +1,6 @@
 import { CodeResult } from '../models/CodeResult';
 
-const serverUrl = import.meta.env.VITE_SERVER_URL;
-
-if (!serverUrl) {
-  throw new Error('Server URL is not defined in the environment variables.');
-}
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://127.0.0.1:8000/";
 
 const prefix = 'api';
 
