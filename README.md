@@ -2,7 +2,10 @@
 
 This is a take home assignment for a job position at a cool company.
 
-https://github.com/SamZhang02/code-editor/assets/112342947/b597a5f4-fbf1-4624-ae12-21085b682f22
+
+
+https://github.com/SamZhang02/code-editor/assets/112342947/4d83afb1-405c-46a4-9e4f-571fa45b0fcf
+
 
 The website is an online code editor for Python 3.11, with a `test code` button
 thats runs the code, and a `submit` button to persist the code into a database.
